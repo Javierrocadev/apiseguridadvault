@@ -15,20 +15,20 @@ builder.Services.AddAuthentication(helper.GetAuthenticateSchema()).AddJwtBearer(
 
 // Add services to the container. 
 
-builder.Services.AddAzureClients(factory =>
-{
-    factory.AddSecretClient
-    (builder.Configuration.GetSection("KeyVault"));
-});
-//DEBEMOS PODER RECUPERAR UN OBJETO INYECTADO EN CLASES  
-//QUE NO TIENEN CONSTRUCTOR 
-SecretClient secretClient =
-builder.Services.BuildServiceProvider().GetService<SecretClient>();
-KeyVaultSecret secret =
-    await secretClient.GetSecretAsync("SqlAzure");
-string connectionString = secret.Value;
+//builder.Services.AddAzureClients(factory =>
+//{
+//    factory.AddSecretClient
+//    (builder.Configuration.GetSection("KeyVault"));
+//});
+////DEBEMOS PODER RECUPERAR UN OBJETO INYECTADO EN CLASES  
+////QUE NO TIENEN CONSTRUCTOR 
+//SecretClient secretClient =
+//builder.Services.BuildServiceProvider().GetService<SecretClient>();
+//KeyVaultSecret secret =
+//    await secretClient.GetSecretAsync("SqlAzure");
+//string connectionString = secret.Value;
 
-//string connectionString =builder.Configuration.GetConnectionString("SqlAzure");
+string connectionString =builder.Configuration.GetConnectionString("SqlAzure");
 builder.Services.AddTransient<RepositoryEmpleados>();
 builder.Services.AddDbContext<EmpleadoContext>(options => options.UseSqlServer(connectionString));
 
